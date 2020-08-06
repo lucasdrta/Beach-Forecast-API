@@ -1,0 +1,34 @@
+{
+  "name": "typescript-api",
+  "version": "1.0.0",
+  "description": "Typescript Nodejs Api",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "yarn build && node dist/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lucasdrta/node-typescript-api.git"
+  },
+  "keywords": [
+    "nodejs",
+    "api",
+    "typescript"
+  ],
+  "author": "Lucas Duarte",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lucasdrta/node-typescript-api/issues"
+  },
+  "homepage": "https://github.com/lucasdrta/node-typescript-api#readme",
+  "devDependencies": {
+    "@types/module-alias": "^2.0.0",
+    "@types/node": "^14.0.27",
+    "typescript": "^3.9.7"
+  },
+  "dependencies": {
+    "module-alias": "^2.2.2"
+  }
+}
