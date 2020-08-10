@@ -1,50 +1,51 @@
-import { ForecastPoint, StormGlass } from '@src/clients/stormGlass'
+import { ForecastPoint, StormGlass } from '@src/clients/stormGlass';
+import { InternalError } from '@src/utils/errors/internal-error';
 
 export enum BeachPosition {
   S = 'S',
   E = 'E',
   W = 'W',
-  N = 'N'
+  N = 'N',
 }
 
 export interface Beach {
-  lat: number,
-  lng: number,
-  name: string,
-  position: BeachPosition,
-  user: string
+  lat: number;
+  lng: number;
+  name: string;
+  position: BeachPosition;
+  user: string;
 }
 
 export interface TimeForecast {
-  time: string,
-  forecast: BeachForecast[]
+  time: string;
+  forecast: BeachForecast[];
+}
+
+export class ForecastProcessingInternalError extends InternalError {
+  constructor(message: string) {
+    super(`Unexpected error during the forecast processing: ${message}`);
+  }
 }
 
 export interface BeachForecast extends Omit<Beach, 'user'>, ForecastPoint {}
 
 export class Forecast {
-  constructor(protected stormGlass = new StormGlass()){}
+  constructor(protected stormGlass = new StormGlass()) {}
 
-  public async processForecastForBeaches(beaches: Beach[]): Promise<TimeForecast[]> {
-    const pointsWithCorrectSources: BeachForecast[] = []
-
-    for(const beach of beaches) {
-      const points = await this.stormGlass.FetchPoints(beach.lat, beach.lng)
-      const enrichBeachData = points.map((e) => ({
-        ... {
-          lat: beach.lat,
-          lng: beach.lng,
-          name: beach.name,
-          position: beach.position,
-          rating: 1
-        },
-        ...e
-      }))
-
-      pointsWithCorrectSources.push(...enrichBeachData)
+  public async processForecastForBeaches(
+    beaches: Beach[]
+  ): Promise<TimeForecast[]> {
+    const pointsWithCorrectSources: BeachForecast[] = [];
+    try {
+      for (const beach of beaches) {
+        const points = await this.stormGlass.FetchPoints(beach.lat, beach.lng);
+        const enrichedBeachData = this.enrichBeachData(points, beach);
+        pointsWithCorrectSources.push(...enrichedBeachData);
+      }
+      return this.mapForecastByTime(pointsWithCorrectSources);
+    } catch (error) {
+      throw new ForecastProcessingInternalError(error.message);
     }
-
-    return this.mapForecastByTime(pointsWithCorrectSources)
   }
 
   private mapForecastByTime(forecast: BeachForecast[]): TimeForecast[] {
@@ -62,4 +63,21 @@ export class Forecast {
     }
     return forecastByTime;
   }
+  private enrichBeachData(
+    points: ForecastPoint[],
+    beach: Beach
+  ): BeachForecast[] {
+    return points.map((e) => ({
+      ...{},
+      ...{
+        lat: beach.lat,
+        lng: beach.lng,
+        name: beach.name,
+        position: beach.position,
+        rating: 1,
+      },
+      ...e,
+    }));
+  }
+
 }
