@@ -1,6 +1,6 @@
 import { InternalError } from '@src/utils/errors/internal-error';
-import config, { IConfig } from 'config'
-import * as HTTPUtil from '@src/utils/request'
+import config, { IConfig } from 'config';
+import * as HTTPUtil from '@src/utils/request';
 export interface StormGlassPointSource {
   [key: string]: number;
 }
@@ -33,17 +33,21 @@ export interface ForecastPoint {
 
 export class ClientRequestError extends InternalError {
   constructor(message: string) {
-    super(`Unexpected error when trying to communicate to StormGlass: ${message}`)
+    super(
+      `Unexpected error when trying to communicate to StormGlass: ${message}`
+    );
   }
 }
 
 export class StormGlassResponseError extends InternalError {
   constructor(message: string) {
-    super(`Unexpected error returned by the StormGlass service: ${message}`)
+    super(`Unexpected error returned by the StormGlass service: ${message}`);
   }
 }
 
-const stormGlassResourceConfig: IConfig = config.get('App.resources.StormGlass')
+const stormGlassResourceConfig: IConfig = config.get(
+  'App.resources.StormGlass'
+);
 export class StormGlass {
   readonly stormGlassAPIParams =
     'swellDirection,swellHeight,swellPeriod,waveDirection,waveHeight,windDirection,windSpeed';
@@ -56,7 +60,11 @@ export class StormGlass {
     try {
       const response = await this.request.get<StormGlassForecastResponse>(
         `
-        ${stormGlassResourceConfig.get('apiUrl')}/weather/point?params=${this.stormGlassAPIParams}&source=${this.stormGlassAPISource}&end=1592113802&lat=${lat}lng=${lng}`,
+        ${stormGlassResourceConfig.get('apiUrl')}/weather/point?params=${
+          this.stormGlassAPIParams
+        }&source=${
+          this.stormGlassAPISource
+        }&end=1592113802&lat=${lat}lng=${lng}`,
         {
           headers: {
             Authorization: stormGlassResourceConfig.get('apiToken'),
@@ -73,7 +81,7 @@ export class StormGlass {
           }`
         );
       }
-      throw new ClientRequestError(err.message)
+      throw new ClientRequestError(err.message);
     }
   }
 
