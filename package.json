@@ -26,9 +26,9 @@
   "author": "Lucas Duarte",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/lucasdrta/node-typescript-api/issues"
+    "url": "https://github.com/lucasdrta/Beach-Forecast-API/issues"
   },
-  "homepage": "https://github.com/lucasdrta/node-typescript-api#readme",
+  "homepage": "https://github.com/lucasdrta/Beach-Forecast-API#readme",
   "devDependencies": {
     "@types/axios": "^0.14.0",
     "@types/config": "^0.0.36",
