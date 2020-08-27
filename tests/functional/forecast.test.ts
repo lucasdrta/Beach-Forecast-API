@@ -1,7 +1,7 @@
-import { Beach, BeachPosition } from "@src/models/beach";
-import stormGlassWeather3HoursFixture from '../fixture/stormglass_weather_3_hours.json'
-import apiForecastResponse1BeachFixture from '../fixture/api_forecast_response_1_beach.json'
-import nock from 'nock'
+import { Beach, BeachPosition } from '@src/models/beach';
+import stormGlassWeather3HoursFixture from '../fixture/stormglass_weather_3_hours.json';
+import apiForecastResponse1BeachFixture from '../fixture/api_forecast_response_1_beach.json';
+import nock from 'nock';
 
 describe('Beach forecast functional tests', () => {
   beforeEach(async () => {
