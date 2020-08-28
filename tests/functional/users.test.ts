@@ -1,4 +1,5 @@
 import { User } from '@src/models/user';
+import AuthService from '@src/services/auth';
 
 describe('Users functional tests', () => {
   beforeEach(async () => {
@@ -6,7 +7,7 @@ describe('Users functional tests', () => {
   });
 
   describe('When creating a user', () => {
-    it('should successfully create a new user', async () => {
+    it('should successfully create a new user with encrypted password', async () => {
       const newUser = {
         name: 'John Doe',
         email: 'john@mail.com',
@@ -16,7 +17,15 @@ describe('Users functional tests', () => {
       const response = await global.testRequest.post('/users').send(newUser);
 
       expect(response.status).toBe(201);
-      expect(response.body).toEqual(expect.objectContaining(newUser));
+      await expect(
+        AuthService.comparePasswords(newUser.password, response.body.password)
+      ).resolves.toBeTruthy();
+      expect(response.body).toEqual(
+        expect.objectContaining({
+          ...newUser,
+          ...{ password: expect.any(String) },
+        })
+      );
     });
 
     it('should return 422 when there is a validation error', async () => {
@@ -25,14 +34,14 @@ describe('Users functional tests', () => {
         password: '1234',
       };
 
-      const response = await global.testRequest.post('/users').send(newUser)
+      const response = await global.testRequest.post('/users').send(newUser);
 
       expect(response.status).toBe(422);
       expect(response.body).toEqual({
         code: 422,
-        error: 'User validation failed: name: Path `name` is required.'
+        error: 'User validation failed: name: Path `name` is required.',
       });
-    })
+    });
 
     it('Should return 409 when the email already exists', async () => {
       const newUser = {
