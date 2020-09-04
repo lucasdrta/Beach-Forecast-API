@@ -1,4 +1,5 @@
 import { ClassMiddleware, Controller, Post } from '@overnightjs/core';
+import logger from '@src/logger';
 import { authMiddleware } from '@src/middlewares/auth';
 import { Beach } from '@src/models/beach';
 import { Request, Response } from 'express';
@@ -19,6 +20,7 @@ export class BeachesController {
           error: error.message,
         });
       } else {
+        logger.error(error)
         res.status(500).send({
           error: 'Internal Server Error',
         });
