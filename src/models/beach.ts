@@ -1,6 +1,6 @@
 import mongoose, { Schema, Document, Model } from 'mongoose';
 
-export enum BeachPosition {
+export enum GeoPosition {
   S = 'S',
   E = 'E',
   W = 'W',
@@ -12,7 +12,7 @@ export interface Beach {
   lat: number;
   lng: number;
   name: string;
-  position: BeachPosition;
+  position: GeoPosition;
   user: string;
 }
 
@@ -37,7 +37,7 @@ const schema = new Schema(
     user: {
       type: Schema.Types.ObjectId,
       ref: 'User',
-      required: true
+      required: true,
     },
   },
   {
