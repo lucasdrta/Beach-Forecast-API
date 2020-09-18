@@ -39,7 +39,7 @@ describe('Users functional tests', () => {
       expect(response.status).toBe(422);
       expect(response.body).toEqual({
         code: 422,
-        error: "Unprocessable Entity",
+        error: 'Unprocessable Entity',
         message: 'User validation failed: name: Path `name` is required.',
       });
     });
@@ -56,28 +56,29 @@ describe('Users functional tests', () => {
       expect(response.status).toBe(409);
       expect(response.body).toEqual({
         code: 409,
-        error: "Conflict",
-        message: 'User validation failed: email: already exists in the database.',
+        error: 'Conflict',
+        message:
+          'User validation failed: email: already exists in the database.',
       });
     });
   });
 
   describe('When autheticate a user', () => {
-    it('should generate a token for a valid user', async() => {
+    it('should generate a token for a valid user', async () => {
       const newUser = {
         name: 'John Doe',
         email: 'john@mail.com',
         password: '1234',
       };
-      await new User(newUser).save()
+      await new User(newUser).save();
       const response = await global.testRequest
         .post('/users/authenticate')
-        .send({ email: newUser.email, password: newUser.password })
+        .send({ email: newUser.email, password: newUser.password });
 
       expect(response.body).toEqual(
         expect.objectContaining({ token: expect.any(String) })
-      )
-    })
+      );
+    });
 
     it('Should return UNAUTHORIZED if the user with the given email is not found', async () => {
       const response = await global.testRequest
@@ -135,5 +136,5 @@ describe('Users functional tests', () => {
         expect(body.message).toBe('User not found!');
       });
     });
-  })
+  });
 });
