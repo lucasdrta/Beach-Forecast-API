@@ -25,7 +25,7 @@
     "typescript"
   ],
   "author": "Lucas Duarte",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/lucasdrta/Beach-Forecast-API/issues"
   },
