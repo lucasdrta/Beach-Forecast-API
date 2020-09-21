@@ -1,5 +1,4 @@
-# Surf Api
-
+# Beach-Forecast-API
 [![Badge](https://img.shields.io/badge/Complete%20workflow-passing-%2334D058?style=for-the-badge&logo=github)](https://github.com/lucasdrta/Beach-Forecast-API/actions)
 
 Este projeto foi feito sequindo o curso do meste **Waldemar Neto**<br>
