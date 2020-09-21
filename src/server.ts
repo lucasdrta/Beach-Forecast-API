@@ -13,6 +13,7 @@ import { UserController } from './controllers/users';
 import { Application } from 'express';
 import * as database from '@src/database';
 import logger from './logger';
+import { apiErrorValidator } from './middlewares/api-error-validator';
 
 export class SetupServer extends Server {
   constructor(private port = 3000) {
@@ -24,12 +25,17 @@ export class SetupServer extends Server {
     await this.docsSetup()
     this.setupControllers();
     await this.databaseSetup();
+    this.setupErrorHandlers()
   }
 
   private setupExpress(): void {
     this.app.use(bodyParser.json());
     this.app.use(expressPino(logger));
     this.app.use(cors())
+  }
+
+  private setupErrorHandlers(): void {
+    this.app.use(apiErrorValidator)
   }
 
   private setupControllers(): void {
