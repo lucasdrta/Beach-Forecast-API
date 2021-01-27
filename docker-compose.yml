@@ -1,0 +1,22 @@
+version: "3.9"
+
+services:
+  mongodb:
+    image: mongo
+    ports:
+      - "27017:27017"
+
+  beach-forecast:
+    build: .
+    command: yarn start
+    ports:
+      - "3000:3000"
+    environment:
+      - MONGODB_URL=mongodb://mongodb/surf-forecast
+      - PORT=3000
+      - STORM_GLASS_API_URL=https://api.stormglass.io/v2
+      - STORM_GLASS_API_TOKEN=2d047f82-d8bc-11ea-8a24-0242ac130002-2d04807c-d8bc-11ea-8a24-0242ac130002
+    links:
+      - "mongodb"
+    depends_on:
+      - "mongodb"
