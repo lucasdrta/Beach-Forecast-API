@@ -1,5 +1,5 @@
 # Beach-Forecast-API
-[![Badge](https://img.shields.io/badge/Complete%20workflow-passing-%2334D058?style=for-the-badge&logo=github)](https://github.com/lucasdrta/Beach-Forecast-API/actions)
+
 
 Este projeto foi feito sequindo o curso do meste **Waldemar Neto**<br>
 A playlist do curo esta em: https://www.youtube.com/channel/UCqmJGTdcMIRXOZuukHZ8TqA <br>
@@ -49,6 +49,9 @@ $ yarn ou npm install
 # Execute os testes
 $ yarn test
 
+# Compilando a aplicação
+$ yarn build
+
 # Execute a aplicação
 $ yarn start
 
@@ -56,6 +59,24 @@ $ yarn start
 
 # Necessario ter o serviço do MongoDB em execução.
 ```
+<br>
+<br>
+
+### Instalação com Docker
+
+Caso prefira inicializar um ambiente de desenvolvimento com Docker, o app possui um arquivo `docker-compose.yml` preparado com as configurações necessárias.
+
+#### Pré-requisitos
+
+- [Docker](https://docs.docker.com/engine/install/)
+- [Docker Compose](https://docs.docker.com/compose/install/)
+
+#### Inicializando os contêineres
+
+```bash
+$ docker-compose up -d --build
+```
+<br>
 <br>
 
 
